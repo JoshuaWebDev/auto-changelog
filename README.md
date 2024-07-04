@@ -7,3 +7,11 @@ Creates a changelog file automatically from git logs
 - Git
 - PHP
 - Composer
+
+## Installation
+
+    composer require --dev joshuawebdev/auto-changelog
+
+## Usage
+
+    php vendor/joshuawebdev/auto-changelog/generate.php
