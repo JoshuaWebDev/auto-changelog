@@ -51,7 +51,17 @@ class AutoChangelogTest extends TestCase
      * @test
      * @return void
      */
-    public function should_exist_setChangeLogFile_method(): void
+    public function should_exist_getGitLog_method(): void
+    {
+        $obj = new AutoChangelog();
+        $this->assertTrue(method_exists($obj, 'getGitLog'));
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function should_exist_createChangeLogFile_method(): void
     {
         $obj = new AutoChangelog();
         $this->assertTrue(method_exists($obj, 'createChangeLogFile'));
@@ -83,21 +93,21 @@ class AutoChangelogTest extends TestCase
      * @test
      * @return void
      */
-    public function the_createChangeLogFile_method_must_be_private(): void
+    public function the_getGitLog_method_must_be_private(): void
     {
         $obj = new AutoChangelog();
         $methods = get_class_methods($obj);
-        $this->assertFalse(in_array('createChangeLogFile', $methods));
+        $this->assertFalse(in_array('getGitLog', $methods));
     }
 
     /**
      * @test
      * @return void
      */
-    public function the_getGitLog_method_must_be_private(): void
+    public function the_createChangeLogFile_method_must_be_private(): void
     {
         $obj = new AutoChangelog();
         $methods = get_class_methods($obj);
-        $this->assertFalse(in_array('getGitLog', $methods));
+        $this->assertFalse(in_array('createChangeLogFile', $methods));
     }
 }
