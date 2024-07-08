@@ -31,10 +31,20 @@ class AutoChangelogTest extends TestCase
      * @test
      * @return void
      */
-    public function should_exist_tmp_directory(): void
+    public function should_exist_temp_file(): void
     {
-        $tmpdir = 'src/tmp/logs-to-changelog.md';
-        $this->assertTrue(file_exists($tmpdir), 'The directory tmp does not exist');
+        $tempFile = 'src/tmp/temp.md';
+        $this->assertTrue(file_exists($tempFile), 'The temp.md does not exist');
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function should_exist_changelog_file(): void
+    {
+        $changelog = 'src/tmp/CHANGELOG.md';
+        $this->assertTrue(file_exists($changelog), 'The CHANGELOG.md file does not exist');
     }
 
     /**
