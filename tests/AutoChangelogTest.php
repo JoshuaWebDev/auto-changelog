@@ -34,7 +34,7 @@ class AutoChangelogTest extends TestCase
     public function should_exist_tmp_directory(): void
     {
         $tmpdir = 'src/tmp/logs-to-changelog.md';
-        $this->assertTrue(file_exists($tmpdir));
+        $this->assertTrue(file_exists($tmpdir), 'The directory tmp does not exist');
     }
 
     /**
@@ -44,7 +44,7 @@ class AutoChangelogTest extends TestCase
     public function should_exist_generate_method(): void
     {
         $obj = new AutoChangelog();
-        $this->assertTrue(method_exists($obj, 'generate'));
+        $this->assertTrue(method_exists($obj, 'generate'), 'The method generate does not exist');
     }
 
     /**
@@ -54,7 +54,7 @@ class AutoChangelogTest extends TestCase
     public function should_exist_getGitLog_method(): void
     {
         $obj = new AutoChangelog();
-        $this->assertTrue(method_exists($obj, 'getGitLog'));
+        $this->assertTrue(method_exists($obj, 'getGitLog'), 'The method getGitLog does not exist');
     }
 
     /**
@@ -64,7 +64,7 @@ class AutoChangelogTest extends TestCase
     public function should_exist_createChangeLogFile_method(): void
     {
         $obj = new AutoChangelog();
-        $this->assertTrue(method_exists($obj, 'createChangeLogFile'));
+        $this->assertTrue(method_exists($obj, 'createChangeLogFile'), 'The method createChangeLogFile does not exist');
     }
 
     /**
@@ -74,7 +74,37 @@ class AutoChangelogTest extends TestCase
     public function should_exist_handleFile_method(): void
     {
         $obj = new AutoChangelog();
-        $this->assertTrue(method_exists($obj, 'handleFile'));
+        $this->assertTrue(method_exists($obj, 'handleFile'), 'The method handleFile does not exist');
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function should_exist_tagExists_method(): void
+    {
+        $obj = new AutoChangelog();
+        $this->assertTrue(method_exists($obj, 'tagExists'), 'The method tagExists does not exist');
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function should_exist_getTagFromCommit_method(): void
+    {
+        $obj = new AutoChangelog();
+        $this->assertTrue(method_exists($obj, 'getTagFromCommit'), 'The method getTagFromCommit does not exist');
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function should_exist_getDateFromCommit_method(): void
+    {
+        $obj = new AutoChangelog();
+        $this->assertTrue(method_exists($obj, 'getDateFromCommit'), 'The method getDateFromCommit does not exist');
     }
 
     /**
@@ -93,21 +123,54 @@ class AutoChangelogTest extends TestCase
      * @test
      * @return void
      */
-    public function the_getGitLog_method_must_be_private(): void
+    public function the_method_getGitLog_must_be_private(): void
     {
         $obj = new AutoChangelog();
         $methods = get_class_methods($obj);
-        $this->assertFalse(in_array('getGitLog', $methods));
+        $this->assertFalse(in_array('getGitLog', $methods), 'The method getGitLog is public but must be private');
     }
 
     /**
      * @test
      * @return void
      */
-    public function the_createChangeLogFile_method_must_be_private(): void
+    public function the_method_createChangeLogFile_must_be_private(): void
     {
         $obj = new AutoChangelog();
         $methods = get_class_methods($obj);
-        $this->assertFalse(in_array('createChangeLogFile', $methods));
+        $this->assertFalse(in_array('createChangeLogFile', $methods), 'The method createChangeLogFile is public but must be private');
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function the_method_tagExists_must_be_private(): void
+    {
+        $obj = new AutoChangelog();
+        $methods = get_class_methods($obj);
+        $this->assertFalse(in_array('tagExists', $methods), 'The method tagExists is public but must be private');
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function the_method_getTagFromCommit_must_be_private(): void
+    {
+        $obj = new AutoChangelog();
+        $methods = get_class_methods($obj);
+        $this->assertFalse(in_array('getTagFromCommit', $methods), 'The method getTagFromCommit is public but must be private');
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function the_method_getDateFromCommit_must_be_private(): void
+    {
+        $obj = new AutoChangelog();
+        $methods = get_class_methods($obj);
+        $this->assertFalse(in_array('getDateFromCommit', $methods), 'The method getDateFromCommit is public but must be private');
     }
 }

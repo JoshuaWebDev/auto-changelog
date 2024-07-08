@@ -5,7 +5,7 @@ namespace JoshuaWebDev\AutoChangelog;
 class AutoChangelog {
     protected $format = "\"%n%cs %n- %s (%h)\"";
     protected $logCommand = 'git log --decorate --tags --format=';
-    protected $logFullCommand = 'git log --decorate --tags --abbrev-commit --date=short --no-expand-tabs';
+    protected $logFullCommand = 'git log --decorate --tags --abbrev-commit --date=short --expand-tabs';
 
     /**
      * Generate the CHANGELOG.md file
@@ -72,12 +72,23 @@ class AutoChangelog {
             //print_r($arrayCommits);
 
             for ($i = 0; $i < count($arrayCommits); $i++) {
-                for ($j = 0; $j < 6; $j++) {
+                // for ($j = 0; $j < 6; $j++) {
                     //$output .= "# {$values[0]}<!-- {$values[1]} -->{$values[2]}\n - {$values[4]}\n";
                     //$output .= "# {$values[$key][0]}<!-- {$values[$key][1]} -->{$values[$key][2]}\n - {$values[$key][4]}\n";
                     //$output .= $values[0] . "\n";
-                    $output .= "## [{$arrayCommits[$i][0]}] <!-- {$arrayCommits[$i][1]} --> - {$arrayCommits[$i][2]} \n- {$arrayCommits[$i][4]}\n";
-                }
+                    $commitCommented = "\n<!-- {$arrayCommits[$i][0]}{$arrayCommits[$i][1]}{$arrayCommits[$i][2]}{$arrayCommits[$i][3]}{$arrayCommits[$i][4]}{$arrayCommits[$i][5]}-->";
+                    $tagVersion = '';
+                    $dateCommit = $this->getDateFromCommit(trim($arrayCommits[$i][2]));
+                    $commitMessage = trim($arrayCommits[$i][4]);
+
+                    if ($this->tagExists($arrayCommits[$i][0])) {
+                        $tagVersion = $this->getTagFromCommit($arrayCommits[$i][0]);
+                        $tagVersion = '['. $tagVersion . '] - ' . $dateCommit;
+                    }
+                    
+                    $output .= !empty($tagVersion) ? "\n## $tagVersion\n\n - $commitMessage" : "\n- $commitMessage";
+                    $output .= $commitCommented;
+                // }
                 //$output .= "\n--------------------------------------------------------------------------------\n";
                 //var_dump($values);
             }
@@ -110,5 +121,42 @@ class AutoChangelog {
         }
 
         return file($filename);
+    }
+
+    /**
+     * Function to check if exists the word 'tag' in a string
+     *
+     * @param string $filename
+     * @return bool
+     */
+    private function tagExists($text): bool
+    {
+        if (preg_match('/tag/', $text)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Search for a string like the pattern '(tag: v1.2.3)' and return only the substring 'v1.2.3'
+     *
+     * @param string $text
+     * @return string
+     */
+    private function getTagFromCommit($text) {
+        preg_match('/\(.+\)/', $text, $matches);
+        $tagVersion = substr($matches[0], 6, -1);
+        return $tagVersion;
+    }
+
+    /**
+     * Return the date from a substring.
+     * Example: 'Date    2010-10-20' -> '2010-10-20'
+     *
+     * @param string $text
+     * @return string
+     */
+    private function getDateFromCommit($text) {
+        return substr($text, -10);
     }
 }
