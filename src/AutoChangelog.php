@@ -144,8 +144,9 @@ class AutoChangelog {
      * @return string
      */
     private function getTagFromCommit($text) {
-        preg_match('/\(.+\)/', $text, $matches);
-        $tagVersion = substr($matches[0], 6, -1);
+        preg_match('/tag.+\)/', $text, $matches);
+        // print_r($matches);
+        $tagVersion = substr($matches[0], 5, -1);
         return $tagVersion;
     }
 
