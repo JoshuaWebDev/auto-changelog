@@ -6,9 +6,12 @@ class AutoChangelog {
     protected $format = "\"%n%cs %n- %s (%h)\"";
     protected $logCommand = 'git log --decorate --format=';
     protected $logFullCommand = 'git log --decorate --abbrev-commit --date=short';
+    protected $tempDir = __DIR__ . '/tmp/';
+    protected $tempMdFile = __DIR__ . '/tmp/temp.md';
+
 
     function teste() {
-        shell_exec($this->logCommand . $this->format . " > src/tmp/temp.md");
+        shell_exec($this->logCommand . $this->format . ' > ' . $tempMdFile);
     }
 
     /**
@@ -45,9 +48,9 @@ class AutoChangelog {
     {
         try {
             // Execute git log command e write the output to temporary file (logs-to-changelog.md)
-            echo shell_exec($this->getGitLog() . " > src/tmp/temp.md");
+            echo shell_exec($this->getGitLog() . ' > ' . $this->tempMdFile);
             
-            $fileToArray = $this->handleFile('src/tmp/temp.md');
+            $fileToArray = $this->handleFile($this->tempMdFile);
 
             // print_r($fileToArray);
 

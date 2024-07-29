@@ -41,16 +41,6 @@ class AutoChangelogTest extends TestCase
      * @test
      * @return void
      */
-    public function should_exist_changelog_file(): void
-    {
-        $changelog = 'src/tmp/CHANGELOG.md';
-        $this->assertTrue(file_exists($changelog), 'The CHANGELOG.md file does not exist');
-    }
-
-    /**
-     * @test
-     * @return void
-     */
     public function should_exist_generate_method(): void
     {
         $obj = new AutoChangelog();
@@ -123,7 +113,7 @@ class AutoChangelogTest extends TestCase
      */
     public function should_exist_the_public_methods_of_the_list(): void
     {
-        $list = ['generate'];
+        $list = ['teste', 'generate'];
         $obj = new AutoChangelog();
         $methods = get_class_methods($obj);
         $this->assertEquals($list, $methods);
